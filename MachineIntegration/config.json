@@ -1,0 +1,19 @@
+{
+  "user": "root",
+  "password": "",
+  "host": "localhost",
+  "db_port": 3306,
+  "database": "flabs_db",
+  "machine_name": "em200",
+  "run_port": 5100,
+  "type": "network",
+  "network_type": "server",
+  "network_ip": "192.168.1.15",
+  "network_port": 5200,
+  "network_ack": false,
+  "serial_port": "COM7",
+  "serial_baudrate": 9600,
+  "serial_parity": "none",
+  "serial_data_bits": 8,
+  "serial_stop_bits": 1
+}

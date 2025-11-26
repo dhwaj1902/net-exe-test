@@ -1,0 +1,139 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
+        x:Class="MachineIntegration.MainWindow"
+        Title="FLABS Machine Integration"
+        Width="1200" Height="700"
+        MinWidth="900" MinHeight="500"
+        WindowStartupLocation="CenterScreen"
+        Background="#0d1117">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#161b22" Padding="15,10" BorderBrush="#30363d" BorderThickness="0,0,0,1">
+            <Grid ColumnDefinitions="*,Auto,Auto">
+                <!-- Title and Machine Name -->
+                <StackPanel Orientation="Horizontal" Spacing="15">
+                    <TextBlock Text="⚙" FontSize="24" Foreground="#58a6ff" VerticalAlignment="Center"/>
+                    <StackPanel>
+                        <TextBlock Text="FLABS Machine Integration" FontSize="16" FontWeight="Bold" Foreground="#c9d1d9"/>
+                        <TextBlock x:Name="MachineNameText" Text="Machine: --" FontSize="12" Foreground="#8b949e"/>
+                    </StackPanel>
+                </StackPanel>
+                
+                <!-- Database Status -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" Margin="0,0,20,0" VerticalAlignment="Center">
+                    <Ellipse x:Name="DbStatusIndicator" Width="10" Height="10" Fill="#f85149"/>
+                    <TextBlock x:Name="DbStatusText" Text="Database: Disconnected" FontSize="12" Foreground="#8b949e" VerticalAlignment="Center"/>
+                </StackPanel>
+                
+                <!-- Controls -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10">
+                    <Button x:Name="StartButton" Content="▶ Start" Padding="15,8" Background="#238636" Foreground="White" CornerRadius="6" Click="OnStartClick"/>
+                    <Button x:Name="StopButton" Content="■ Stop" Padding="15,8" Background="#f85149" Foreground="White" CornerRadius="6" Click="OnStopClick" IsEnabled="False"/>
+                    <Button x:Name="ClearButton" Content="🗑 Clear" Padding="15,8" Background="#30363d" Foreground="#c9d1d9" CornerRadius="6" Click="OnClearClick"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content - 3 Sections -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="10">
+            
+            <!-- Section 1: Raw Data from Machine -->
+            <Border Grid.Column="0" Background="#161b22" CornerRadius="8" Margin="5" BorderBrush="#30363d" BorderThickness="1">
+                <Grid RowDefinitions="Auto,*">
+                    <Border Background="#21262d" CornerRadius="8,8,0,0" Padding="12,8">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="📥" FontSize="14"/>
+                            <TextBlock Text="RAW DATA (From Machine)" FontSize="13" FontWeight="SemiBold" Foreground="#58a6ff"/>
+                        </StackPanel>
+                    </Border>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <TextBox x:Name="RawDataBox" 
+                                 IsReadOnly="True"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"
+                                 Background="Transparent"
+                                 Foreground="#7ee787"
+                                 FontFamily="Consolas, Monaco, monospace"
+                                 FontSize="11"
+                                 Padding="10"
+                                 BorderThickness="0"/>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <!-- Section 2: Converted/Parsed Data -->
+            <Border Grid.Column="1" Background="#161b22" CornerRadius="8" Margin="5" BorderBrush="#30363d" BorderThickness="1">
+                <Grid RowDefinitions="Auto,*">
+                    <Border Background="#21262d" CornerRadius="8,8,0,0" Padding="12,8">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="🔄" FontSize="14"/>
+                            <TextBlock Text="CONVERTED DATA (Parsed)" FontSize="13" FontWeight="SemiBold" Foreground="#d29922"/>
+                        </StackPanel>
+                    </Border>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <TextBox x:Name="ConvertedDataBox" 
+                                 IsReadOnly="True"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"
+                                 Background="Transparent"
+                                 Foreground="#ffa657"
+                                 FontFamily="Consolas, Monaco, monospace"
+                                 FontSize="11"
+                                 Padding="10"
+                                 BorderThickness="0"/>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <!-- Section 3: Data Sent to Machine -->
+            <Border Grid.Column="2" Background="#161b22" CornerRadius="8" Margin="5" BorderBrush="#30363d" BorderThickness="1">
+                <Grid RowDefinitions="Auto,*">
+                    <Border Background="#21262d" CornerRadius="8,8,0,0" Padding="12,8">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="📤" FontSize="14"/>
+                            <TextBlock Text="SENT DATA (To Machine)" FontSize="13" FontWeight="SemiBold" Foreground="#a371f7"/>
+                        </StackPanel>
+                    </Border>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <TextBox x:Name="SentDataBox" 
+                                 IsReadOnly="True"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"
+                                 Background="Transparent"
+                                 Foreground="#d2a8ff"
+                                 FontFamily="Consolas, Monaco, monospace"
+                                 FontSize="11"
+                                 Padding="10"
+                                 BorderThickness="0"/>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="#161b22" Padding="15,8" BorderBrush="#30363d" BorderThickness="0,1,0,0">
+            <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                <!-- Connection Status -->
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Ellipse x:Name="ConnectionIndicator" Width="8" Height="8" Fill="#f85149"/>
+                    <TextBlock x:Name="StatusText" Text="Status: Ready" FontSize="12" Foreground="#8b949e"/>
+                </StackPanel>
+                
+                <!-- Connection Type -->
+                <TextBlock x:Name="ConnectionTypeText" Grid.Column="1" Text="Type: --" FontSize="12" Foreground="#8b949e" Margin="0,0,20,0"/>
+                
+                <!-- Port/IP Info -->
+                <TextBlock x:Name="ConnectionInfoText" Grid.Column="2" Text="Port: --" FontSize="12" Foreground="#8b949e" Margin="0,0,20,0"/>
+                
+                <!-- Timestamp -->
+                <TextBlock x:Name="TimestampText" Grid.Column="3" Text="" FontSize="12" Foreground="#484f58"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
+
